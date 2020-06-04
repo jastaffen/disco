@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+const CategorySchema = require('./Category');
 const Schema = mongoose.Schema;
+
 
 const UserSchema = new Schema({
     name: {
@@ -26,18 +28,7 @@ const UserSchema = new Schema({
             message: "Password must be between 6 and 16 characters long."
         }
     },
-    categories: [{
-        category: {
-            type: Schema.Types.ObjectId,
-            ref: 'category'
-        }
-    }],
-    videos: [{
-        video: {
-            type: Schema.Types.ObjectId,
-            ref: 'video'
-        }
-    }]
+    categories: [CategorySchema]
 });
 
 module.exports = User = mongoose.model('user', UserSchema);
