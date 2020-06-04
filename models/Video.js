@@ -11,6 +11,13 @@ const VideoSchema = new Schema({
         required: [true, 'URL required.']
     },
     category: {
-        type: Types.Schema.ObjectId
+        type: Schema.Types.ObjectId,
+        ref: 'category'
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'user'
     }
-})
+});
+
+module.exports = Video = mongoose.model('video', VideoSchema);

@@ -19,7 +19,12 @@ before(async () => {
 })
 
 beforeEach((done) => {
-    mongoose.connection.collections.users.drop(() => {
-        done();
+    const { users, categories, videos } = mongoose.connection.collections;
+    users.drop(() => {
+        categories.drop(() => {
+            videos.drop(() => {
+                done();
+            });
+        });
     });
 });

@@ -14,7 +14,11 @@ const CategorySchema = new Schema({
     videos: [{
         type: Schema.Types.ObjectId,
         ref: 'video'
-    }]
+    }],
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }
 });
 
-module.exports = CategorySchema;
+module.exports = Category = mongoose.model('category', CategorySchema);
