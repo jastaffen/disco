@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const User = require('../../models/User');
+const Category = require('../../models/Category');
 const auth = require('../../middleware/auth');
 
 
@@ -113,6 +114,33 @@ router.patch('/:user_id', auth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 
+});
+
+// @action          POST
+// desc             ADD A CATEGORY
+// access           PRIVATE
+router.post('/category/:user_id', auth, async (req, res) => {
+    const { title } = req.body;
+    const user = await User.findById(req.params.user_id);
+    const category = await new Category({ title });
+    try {
+        for (let cat of user.categories) {
+            if (cat.title === category.title) {
+                res.status(400).json({ msg: 'Category by that name already exists' });
+            }
+        }
+        await category.save();
+        user.categories.push(category);
+        await user.save();
+        res.json(category);
+    } catch (err) {
+        console.error(err.message);
+        const validationRes = category.validateSync();
+        if (validationRes) {
+            res.status(400).json(validationRes.errors);
+        }
+        res.status(500).send('Server Error');
+    }
 });
 
 // @action          DELETE
