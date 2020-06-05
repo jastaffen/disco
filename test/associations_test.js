@@ -9,7 +9,7 @@ describe("Ensures Associations Work Properly", () => {
     beforeEach(async () => {
         joe = new User({ name: 'Joe', email: 'j@j.j', password: 'Radiohead' });
         category = new Category({ title: 'Recipes' });
-        video = new Video({ title: 'Chicken', videoUrl: 'htt://video.com' });
+        video = new Video({ title: 'Chicken', videoUrl: 'https://www.youtube.com/watch?v=txKUTx5fNbg' });
 
         joe.categories.push(category);
         category.user = joe;

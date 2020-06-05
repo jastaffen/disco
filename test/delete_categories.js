@@ -9,7 +9,7 @@ describe('Deletes a Category', () => {
     beforeEach(async () => {
         joe = await new User({ name: 'Joe', email: 'j@j.j', password: 'Radiohead' });
         category = await new Category({ title: 'Recipes' });
-        video = await new Video({ title: 'Chicken', videoUrl: 'hhtp:/video.com' });
+        video = await new Video({ title: 'Chicken', videoUrl: 'https://www.youtube.com/watch?v=txKUTx5fNbg' });
         joe.categories.push(category);
         category.user = joe;
         category.videos.push(video);

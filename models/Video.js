@@ -8,7 +8,25 @@ const VideoSchema = new Schema({
     },
     videoUrl: {
         type: String,
-        required: [true, 'URL required.']
+        required: [true, 'URL required.'],
+        validate: {
+            validator: (videoUrl) => {
+                const re = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+                return re.test(videoUrl)
+            },
+            message: 'Invalid URL.'
+        }
+    },
+    videoLength: {
+        type: Number,
+    },
+    pausedAt: {
+        type: Number,
+        default: 0
+    },
+    watched: {
+        type: Boolean,
+        default: false
     },
     category: {
         type: Schema.Types.ObjectId,
