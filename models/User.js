@@ -11,9 +11,9 @@ const UserSchema = new Schema({
         type: String,
         required: [true, 'Email is required.'],
         validate: {
-            validator: (password) => {
+            validator: (email) => {
                 const re = /\S+@\S+\.\S+/;
-                return re.test(password)
+                return re.test(email)
             },
             message: "Invalid email."
         },
