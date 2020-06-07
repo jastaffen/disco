@@ -129,6 +129,7 @@ router.post('/category/:user_id', auth, async (req, res) => {
                 res.status(400).json({ msg: 'Category by that name already exists' });
             }
         }
+        category.user = user._id;
         await category.save();
         user.categories.push(category);
         await user.save();

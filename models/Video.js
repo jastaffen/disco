@@ -17,6 +17,17 @@ const VideoSchema = new Schema({
             message: 'Invalid URL.'
         }
     },
+    thumbnail: {
+        url: {
+            type: String
+        },
+        width: {
+            type: Number
+        },
+        height: {
+            type: Number
+        }
+    },
     videoLength: {
         type: Number,
     },

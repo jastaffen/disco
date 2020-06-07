@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const Category = require('../../models/Category');
 const User = require('../../models/User');
+const Video = require('../../models/Video');
 
 // @action          GET
 // desc             GETS ALL CATEGORIES BY A USER
@@ -46,11 +47,19 @@ router.delete('/:category_id', auth, async (req, res) => {
     try {
         const category = await Category.findByIdAndRemove(req.params.category_id);
         const user = await User.findById(req.user.id);
+
+        // delete category from current user's categories
         const categories = user.categories
             .filter(cat => cat._id.toString() !== category._id.toString());
-        
         user.categories = categories;
+
         await user.save();
+
+        // delete that category's videos
+        for (let video of category.videos) {
+            await video.remove();
+        }
+        
 
         res.json(category);
     } catch (err) {
