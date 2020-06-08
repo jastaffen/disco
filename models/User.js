@@ -11,9 +11,9 @@ const UserSchema = new Schema({
         type: String,
         required: [true, 'Email is required.'],
         validate: {
-            validator: (password) => {
+            validator: (email) => {
                 const re = /\S+@\S+\.\S+/;
-                return re.test(password)
+                return re.test(email)
             },
             message: "Invalid email."
         },
@@ -23,8 +23,8 @@ const UserSchema = new Schema({
         type: String,
         required: [true, 'Password is required.'],
         validate: {
-            validator: (password) => password.length >= 6 && password.length < 16,
-            message: "Password must be between 6 and 16 characters long."
+            validator: (password) => password.length >= 6,
+            message: "Password must be at least 6 characters long."
         }
     },
     categories: [{

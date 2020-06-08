@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
+    "client": "npm start --prefix disco-client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "nodemon --exec 'mocha'"
   },
   "keywords": [],
@@ -13,6 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "@mongoosejs/double": "^0.2.0",
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
     "concurrently": "^5.2.0",
     "config": "^3.3.1",
     "cors": "^2.8.5",
