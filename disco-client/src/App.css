@@ -1,0 +1,15 @@
+main {
+    margin: 0px 10%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    align-items: center;
+}
+
+.navbar img {
+    width: 150px;
+    object-fit: contain;
+}

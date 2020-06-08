@@ -25,6 +25,11 @@ const PublicLanding = ({ user: { loading, errors }}) => {
         ))
     }
 
+    const handleLinkClick = () => {
+        setSignUp(!signUp);
+        setErrors({});
+    }
+
     return (
         <div>
             <h1>WELCOME TO DISCO</h1>
@@ -39,7 +44,7 @@ const PublicLanding = ({ user: { loading, errors }}) => {
             <div>
                 <h4>{signUp ? "Already have an account?" : 
                     "Don't have an account?" }
-                        <button onClick={() => setSignUp(!signUp)}>
+                        <button onClick={handleLinkClick}>
                             { signUp ? "Login!" : "Sign Up!" }
                         </button>
                 </h4>

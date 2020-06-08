@@ -1,9 +1,18 @@
 import React from 'react';
 
+
+import NavBar from './home/NavBar';
+
+
 const PrivateLanding = () => {
+    
     return (
-        <h1>HI</h1>
+        <main>
+            <NavBar />
+            
+        </main>
     )
 }
 
-export default PrivateLanding;
+
+export default (PrivateLanding);
