@@ -19,14 +19,12 @@ const checkForUser = user => {
 // access           Public
 router.post('/', async (req, res) => {
     const { name, email, password } = req.body;
-
+    let user;
     try {
-        const user = new User({ name, email, password });
-        
+        user = new User({ name, email, password });
         // check for errors
         const validationRes = user.validateSync();
-        if (validationRes) return res.status(400).json(validationRes);
-
+        if (validationRes) return res.json({ errors: validationRes.errors });
         // salt and hash password
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
@@ -42,11 +40,14 @@ router.post('/', async (req, res) => {
             (err, token) => {
                 if (err) throw err;
                 // send token
-                return res.json({ token });
+                return res.json({ token, id: user._id });
             }
         );
     } catch (err) {
         console.error(err.message);
+        // check for errors
+        const validationRes = user.validateSync();
+        if (validationRes) return res.json({ errors: validationRes.errors });
         res.status(500).send('Server Error');
     }
 });
@@ -57,7 +58,7 @@ router.post('/', async (req, res) => {
 // access           Private
 router.get('/:user_id', auth, async (req,res) => {
     try {
-        const user = await User.findOne({ _id: req.params.user_id }).select('-password');
+        const user = await User.findOne({ _id: req.params.user_id }).select('name email');
 
         checkForUser(user);
 

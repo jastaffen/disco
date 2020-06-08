@@ -5,6 +5,9 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 
 import PublicLanding from './components/PublicLanding';
+import PrivateLanding from './components/PrivateLanding';
+
+import PrivateRoute from './routing/PrivateRoute';
 
 const App = () => {
   return (
@@ -12,6 +15,8 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={PublicLanding} />
+          <PrivateRoute exact path="/home" component={PrivateLanding} />
+
         </Switch>
       </Router>
     </Provider>

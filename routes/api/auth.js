@@ -4,6 +4,20 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const User = require('../../models/User');
+const auth = require('../../middleware/auth');
+
+// @route     POST/LOGIN
+// @desc      Authenticate user & get token
+// @access    Public
+router.get('/', auth, async (req,res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.json(user);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
 
 // @route     POST/LOGIN
 // @desc      Authenticate user & get token
@@ -14,13 +28,13 @@ router.post('/', async (req, res) => {
         // see if user exists
         const user = await User.findOne({ email });
         
-        if (!user) return res.status(400).json({ error: 'invalid credentials.' });
+        if (!user) return res.json('Invalid credentials.');
         
         // compare password
         const isMatch = await bcrypt.compare(password, user.password);
     
         if (!isMatch) {
-            return res.status(400).json({ error: 'Invalid credentials' });
+            return res.json('Invalid credentials.');
         }
 
         const payload = {
@@ -35,7 +49,7 @@ router.post('/', async (req, res) => {
             { expiresIn: 360000 }, 
             (err, token) => {
                 if (err) throw err;
-                res.json({ token });
+                res.json({ token, id: user._id });
             }
         );
 
