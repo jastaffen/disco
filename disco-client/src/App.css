@@ -1,10 +1,10 @@
 main {
-    margin: 0px 10%;
+    margin: 0px 12%;
 }
 
 .navbar {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-content: center;
     align-items: center;
 }

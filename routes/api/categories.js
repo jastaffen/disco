@@ -10,7 +10,7 @@ const Video = require('../../models/Video');
 // access           PRIVATE
 router.get('/', auth, async (req,res) => {
     try {
-        const categoriesByUser = await Category.find({ user: req.user.id });
+        const categoriesByUser = await Category.find({ user: req.user.id }).select('-videos');
         res.json(categoriesByUser);
     } catch (err) {
         console.error(err.message);
