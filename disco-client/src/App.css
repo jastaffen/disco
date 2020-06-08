@@ -1,3 +1,57 @@
+body {
+    margin: 0px 12%;
+}
+
+h1 {
+    text-align: center;
+    letter-spacing: 0.2em;
+}
+
+input {
+    width: 300px;
+    height: 30px;
+    display: block;
+    margin-top: 5px;
+    transition: border .5s ease-in-out;
+}
+
+
+
+input:hover {
+    border: 2px solid blue;
+}
+
+button {
+    background: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.public-landing h1 img {
+    width: 170px;
+    object-fit: contain;
+    position: relative;
+    top: 22px;
+}
+
+.auth-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.auth-fields button {
+    display: block;
+    margin: 0 auto;
+}
+
+.auth-switch {
+    position: absolute;
+    bottom: 5px;
+}
+
 main {
     margin: 0px 12%;
 }
