@@ -1,17 +1,17 @@
 import React from 'react';
-
+import { useSpring, animated } from 'react-spring';
 
 import NavBar from './home/NavBar';
 import CategoriesContainer from './home/CategoriesContainer';
 
 
 const PrivateLanding = () => {
-    
+    const fadeIn = useSpring({opacity: 1, from: { opacity: 0 }});
     return (
-        <main>
+        <animated.main style={fadeIn}>
             <NavBar />
             <CategoriesContainer />
-        </main>
+        </animated.main>
     )
 }
 

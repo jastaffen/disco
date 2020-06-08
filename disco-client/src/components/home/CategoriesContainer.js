@@ -1,21 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { getCategories } from '../../redux/actions/categories';
 
-const CategoriesContainer = ({ getCategories, categoryState: { loading, categories } }) => {
+import CategoryCard from './CategoryCard';
+import CategoryCardForm from './CategoryCardForm';
 
+const CategoriesContainer = ({ getCategories, categoryState: { loading, categories } }) => {
+    let [ newCategory, setNewCategory ] = useState([]);
+    const [ categoryTitle, setCategoryTitle ] = useState('');
+    
     useEffect(() => {
         getCategories();
-    }, [])
+    }, [ ]);
+
+
+    const renderCategoryCardForms = () => {
+        return newCategory.map((cat, index) => (
+            <CategoryCardForm key={index} setNewCategory={setNewCategory} />
+        ));
+    }
 
     return (
-        <div>
+        <div className="item-container">
             { !loading && categories.map(category => (
-                <div>
-                    {category.title}
-                </div>
+                <CategoryCard key={category._id} category={category} />
             ))}
+            { newCategory.length > 0 && renderCategoryCardForms()}
+            <div key={'add'} className="item-card" onClick={() => setNewCategory([...newCategory, 'new'])}>
+                <button>+</button>  
+            </div>
         </div>
     )
 }

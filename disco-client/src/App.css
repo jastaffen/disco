@@ -58,6 +58,7 @@ main {
 
 .navbar {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-content: center;
     align-items: center;
@@ -66,4 +67,90 @@ main {
 .navbar img {
     width: 150px;
     object-fit: contain;
+}
+
+.item-container {
+    border: 1px solid black;
+    width: auto;
+    height: 450px;
+    overflow-y: scroll;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.item-card {
+    margin: 20px;
+    width: 200px;
+    height: 200px;
+    border: 2px solid black;
+    cursor: pointer;
+    transition: transform .1s ease-in-out;
+}
+
+.item-card:hover {
+    transform: scale(1.05);
+    box-shadow: 5px 10px #888888;
+}
+
+.item-card:last-child {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.item-card:last-child button {
+    font-size: 28px;
+}
+
+.time-code {
+    height: 150px;
+}
+
+.title {
+    height: 50px;
+    width: 200px;
+    background: blue;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+.title h3 {
+    position: relative;
+    top: 5px;
+    letter-spacing: 0.6em;
+    color: white;
+    text-align: center;
+    font-size: 1vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card-input {
+    width: 90%;
+    display: block;
+    margin: 5px auto;
+    outline: none;
+}
+
+.top-right {
+    position: relative;
+    top: 5px;
+    left: 120px;
+}
+
+.top-right button {
+    background-color: rgb(230, 230, 230);
+    margin: 1px;
+    border-radius: 10px;
+    transition: background-color .5s ease-in-out
+}
+
+.top-right button:hover {
+    background-color: rgb(183, 183, 183);
+}
+
+.top-right button:active {
+    color: white;
 }

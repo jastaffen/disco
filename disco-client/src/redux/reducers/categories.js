@@ -1,4 +1,5 @@
-import { GET_CATEGORIES, SELECTED_CATEGORY, CATEGORY_LOADING, CATEGORY_ERROR } from '../actions/types';
+import { GET_CATEGORIES, SELECTED_CATEGORY, CATEGORY_LOADING, CATEGORY_ERROR, 
+        ADD_CATEGORY, UPDATE_CATEGORY } from '../actions/types';
 
 const initialState = {
     categories: [],
@@ -15,6 +16,21 @@ export default function( state = initialState, action ) {
                 ...state,
                 categories: payload,
                 loading: false
+            }
+        case ADD_CATEGORY:
+            return {
+                ...state,
+                loading: false,
+                categories: [...state.categories, payload]
+            }
+        case UPDATE_CATEGORY:  
+            const updatedCategories = [...state.categories].map(category => {
+                return category._id === payload._id ? payload : category;
+            });
+            return {
+                ...state,
+                loading: false,
+                categories: updatedCategories
             }
         case SELECTED_CATEGORY: 
             return {
