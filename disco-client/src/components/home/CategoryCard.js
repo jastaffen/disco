@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import { updateCategory } from '../../redux/actions/categories';
+import { updateCategory, deleteCategory } from '../../redux/actions/categories';
 
-const CategoryCard = ({ category, updateCategory }) => {
+const CategoryCard = ({ category, updateCategory, deleteCategory }) => {
     const holder = category.title;
     const [ title, setTitle ] = useState(holder);
     const [ activeForm, setActiveForm ] = useState(false);
@@ -16,6 +16,13 @@ const CategoryCard = ({ category, updateCategory }) => {
         setActiveForm(false);
     }
 
+    const handleCategoryDelete = e => {
+        e.preventDefault();
+        if (window.confirm('Are you sure you want to delete the category? Deleting a category will also delete its contents.')) {
+            deleteCategory(category._id);
+        }
+    }
+
     return (
         <div className="item-card">
             <div className="time-code">
@@ -23,7 +30,7 @@ const CategoryCard = ({ category, updateCategory }) => {
                     <button onClick={() => setActiveForm(!activeForm)}>
                         { activeForm ? 'Back' : 'Edit' }
                     </button>
-                    <button>x</button>
+                    <button onClick={handleCategoryDelete}>x</button>
                 </div>           
             </div>
             <div className="title">
@@ -41,4 +48,4 @@ const CategoryCard = ({ category, updateCategory }) => {
     )
 }
 
-export default connect(null, { updateCategory })(CategoryCard);
+export default connect(null, { updateCategory, deleteCategory })(CategoryCard);

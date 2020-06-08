@@ -1,5 +1,5 @@
 import { GET_CATEGORIES, SELECTED_CATEGORY, CATEGORY_LOADING, CATEGORY_ERROR, 
-        ADD_CATEGORY, UPDATE_CATEGORY } from '../actions/types';
+        ADD_CATEGORY, UPDATE_CATEGORY, DELETE_CATEGORY } from '../actions/types';
 
 const initialState = {
     categories: [],
@@ -37,6 +37,13 @@ export default function( state = initialState, action ) {
                 ...state,
                 selectedCategory: payload,
                 loading: false
+            }
+        case DELETE_CATEGORY:
+            const categoriesWithoutDeleted = [...state.categories].filter(category => category._id !== payload._id);
+            return {
+                ...state,
+                loading: false,
+                categories: categoriesWithoutDeleted
             }
         case CATEGORY_LOADING:
             return {
