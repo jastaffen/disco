@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { getCategories } from '../../redux/actions/categories';
@@ -9,11 +8,10 @@ import CategoryCardForm from './CategoryCardForm';
 
 const CategoriesContainer = ({ getCategories, categoryState: { loading, categories } }) => {
     let [ newCategory, setNewCategory ] = useState([]);
-    const [ categoryTitle, setCategoryTitle ] = useState('');
     
     useEffect(() => {
         getCategories();
-    }, [ ]);
+    }, []);
 
 
     const renderCategoryCardForms = () => {
@@ -27,7 +25,7 @@ const CategoriesContainer = ({ getCategories, categoryState: { loading, categori
             { !loading && categories.map(category => (
                 <CategoryCard key={category._id} category={category} />
             ))}
-            { newCategory.length > 0 && renderCategoryCardForms()}
+            { newCategory.length > 0 && renderCategoryCardForms() }
             <div key={'add'} className="item-card" onClick={() => setNewCategory([...newCategory, 'new'])}>
                 <button>+</button>  
             </div>

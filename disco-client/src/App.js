@@ -7,6 +7,8 @@ import setAuthToken from './utils/setAuthToken';
 
 import PublicLanding from './components/PublicLanding';
 import PrivateLanding from './components/PrivateLanding';
+import VideoLanding from './components/home/VideoLanding';
+
 
 import PrivateRoute from './routing/PrivateRoute';
 import { getUser } from './redux/actions/user';
@@ -31,6 +33,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={PublicLanding} />
           <PrivateRoute exact path="/home" component={PrivateLanding} />
+          <PrivateRoute exact path="/:category_id" component={VideoLanding} />
         </Switch>
       </Router>
     </Provider>

@@ -16,4 +16,6 @@ const PrivateLanding = () => {
 }
 
 
-export default (PrivateLanding);
+
+
+export default PrivateLanding;

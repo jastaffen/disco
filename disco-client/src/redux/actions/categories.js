@@ -1,6 +1,6 @@
 import { GET_CATEGORIES, SELECTED_CATEGORY, CATEGORY_LOADING, 
-    CATEGORY_ERROR, ADD_CATEGORY, UPDATE_CATEGORY, DELETE_CATEGORY } from '../actions/types';
-    
+    CATEGORY_ERROR, ADD_CATEGORY, UPDATE_CATEGORY, DELETE_CATEGORY, SELECT_CATEGORY } from '../actions/types';
+
 import axios from 'axios';
 
 export const getCategories = () => async dispatch => {
@@ -70,4 +70,11 @@ export const deleteCategory = id => async dispatch => {
             payload: err
         });
     }
+}
+
+export const selectCategory = category => dispatch => {
+    dispatch({
+        type: SELECT_CATEGORY,
+        payload: category
+    });
 }

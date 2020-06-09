@@ -1,4 +1,4 @@
-import { GET_CATEGORIES, SELECTED_CATEGORY, CATEGORY_LOADING, CATEGORY_ERROR, 
+import { GET_CATEGORIES, SELECT_CATEGORY, CATEGORY_LOADING, CATEGORY_ERROR, 
         ADD_CATEGORY, UPDATE_CATEGORY, DELETE_CATEGORY } from '../actions/types';
 
 const initialState = {
@@ -32,7 +32,7 @@ export default function( state = initialState, action ) {
                 loading: false,
                 categories: updatedCategories
             }
-        case SELECTED_CATEGORY: 
+        case SELECT_CATEGORY: 
             return {
                 ...state,
                 selectedCategory: payload,

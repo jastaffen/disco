@@ -38,6 +38,7 @@ router.post('/:category_id', auth, async (req, res) => {
         video.user = req.user.id;
         video.category = category._id;
         const { url, width, height, videoLength } = await fetchVideoData(vidId);
+        if (!url) return res.json('no video found.');
         video.thumbnail = { url, width, height };
         video.videoLength = videoLength;
         await video.save();
@@ -50,6 +51,20 @@ router.post('/:category_id', auth, async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
+    }
+});
+
+// @action          GET
+// desc             GETS ALL VIDEOS BY CATEGORY
+// access           PRIVATE
+router.get('/category/:category_id', auth, async (req, res) => {
+    try {
+        const videos = await Video.find({ category: req.params.category_id })
+            .select('title thumbnail videoLength watched pausedAt videoUrl');
+        res.json(videos);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error')
     }
 });
 
@@ -67,7 +82,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // @action          GET/SHOW
-// desc             GETS A VIDEO BY IDEA
+// desc             GETS A VIDEO BY ID
 // access           PRIVATE
 router.get('/:video_id', auth, async (req, res) => {
     try {
@@ -121,7 +136,7 @@ router.delete('/:video_id', auth, async (req, res) => {
         category.videos = categoryWithoutVideo;
         await category.save();
         await video.remove();
-        res.json('Video Deleted')
+        res.json(video)
     } catch (err) {
         console.error(err.message);
         if (err.path === '_id') return res.status(400).send('Video not found.');
