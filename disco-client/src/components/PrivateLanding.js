@@ -2,7 +2,7 @@ import React from 'react';
 import { useSpring, animated } from 'react-spring';
 
 import NavBar from './home/NavBar';
-import CategoriesContainer from './home/CategoriesContainer';
+import CategoriesContainer from './home/categories/CategoriesContainer';
 
 
 const PrivateLanding = () => {

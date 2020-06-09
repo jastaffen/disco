@@ -6,7 +6,7 @@ import VideoCardForm from './VideoCardForm';
 import VideoCard from './VideoCard';
 
 
-import { getVideos } from '../../redux/actions/videos';
+import { getVideos } from '../../../redux/actions/videos';
 
 const VideosContainer = ({ getVideos, videoState: { loading, videos }}) => {
     const { category_id } = useParams();

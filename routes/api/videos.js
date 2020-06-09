@@ -144,4 +144,35 @@ router.delete('/:video_id', auth, async (req, res) => {
     }
 });
 
+// @action          PATCH/TOGGLE WATCHED
+// desc             TOGGLES VIDEOS WATCHED PROPERTY
+// access           PRIVATE
+router.patch('/watched/:video_id', auth, async (req, res) => {
+    try {
+        const video = await Video.findById(req.params.video_id);
+        video.set('watched', !video.watched);
+        await video.save();
+        res.json(video);
+    } catch (err) {
+        console.error(err.message);
+        if (err.path === "_id") return res.send('Video not found.');
+    }
+});
+
+// @action          PATCH/PAUSED AT
+// desc             UPDATE WHERE A VIDEO IS PAUSED AT
+// access           PRIVATE
+router.patch('/paused/:video_id', auth, async (req, res) => {
+    const { pausedAt } = req.body
+    try {
+        const video = await Video.findById(req.params.video_id);
+        video.set('pausedAt', parseInt(Math.floor(pausedAt)));
+        await video.save();
+        res.json(video);
+    } catch (err) {
+        console.error(err.message);
+        if (err.path === "_id") return res.send('Video not found.');
+    }
+})
+
 module.exports = router;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSpring, animated } from 'react-spring';
 
-import NavBar from './NavBar';
+import NavBar from '../NavBar';
 import VideosContainer from './VideosContainer';
 
 

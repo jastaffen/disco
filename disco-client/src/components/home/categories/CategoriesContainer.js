@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { getCategories } from '../../redux/actions/categories';
+import { getCategories } from '../../../redux/actions/categories';
 
 import CategoryCard from './CategoryCard';
 import CategoryCardForm from './CategoryCardForm';

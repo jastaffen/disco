@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { useSpring, animated } from 'react-spring';
 
 
-import { updateVideo, deleteVideo, selectVideo } from '../../redux/actions/videos';
+import { updateVideo, deleteVideo, selectVideo } from '../../../redux/actions/videos';
 
 const VideoCard = ({ video, updateVideo, deleteVideo, selectVideo }) => {
     const move = useSpring({ marginRight: 0, from: { marginRight: -5000 }});
@@ -70,7 +70,6 @@ const VideoCard = ({ video, updateVideo, deleteVideo, selectVideo }) => {
                                     <button id="nav-input" onClick={handleNextClick}>URL {'>'}</button> 
                                 </div> 
                                 :
-
                                 <animated.div style={move}>
                                     <div className="video-update-field">
                                         <input className="card-input" type="text" value={videoUrl} onClick={handleFormFocus}
@@ -85,7 +84,6 @@ const VideoCard = ({ video, updateVideo, deleteVideo, selectVideo }) => {
                     : 
                     <h3>{video.title}</h3>
                 }
-                
                 </div>
             </div>
         </Link>

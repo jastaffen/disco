@@ -7,7 +7,8 @@ import setAuthToken from './utils/setAuthToken';
 
 import PublicLanding from './components/PublicLanding';
 import PrivateLanding from './components/PrivateLanding';
-import VideoLanding from './components/home/VideoLanding';
+import VideoLanding from './components/home/videos/VideoLanding';
+import VideoStreamLanding from './components/home/videos/VideoStreamLanding';
 
 
 import PrivateRoute from './routing/PrivateRoute';
@@ -34,6 +35,7 @@ const App = () => {
           <Route exact path="/" component={PublicLanding} />
           <PrivateRoute exact path="/home" component={PrivateLanding} />
           <PrivateRoute exact path="/:category_id" component={VideoLanding} />
+          <PrivateRoute exact path="/v/:video_id" component={VideoStreamLanding} />
         </Switch>
       </Router>
     </Provider>

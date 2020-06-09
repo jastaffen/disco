@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { updateCategory, deleteCategory, selectCategory } from '../../redux/actions/categories';
+import { updateCategory, deleteCategory, selectCategory } from '../../../redux/actions/categories';
 
 
 const CategoryCard = ({ category, updateCategory, deleteCategory, selectCategory }) => {

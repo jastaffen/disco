@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import FormField from '../form/FormField';
+import FormField from '../../form/FormField';
 
-import { addVideo } from '../../redux/actions/videos';
+import { addVideo } from '../../../redux/actions/videos';
 
 const VideoCardForm = ({ addVideo, setNewVideo }) => {
     const vidUrlRegex = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
