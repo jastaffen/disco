@@ -117,3 +117,15 @@ export const recordPause = (videoId, pausedAt) => async dispatch => {
         });
     }
 }
+
+export const hasWatched = categoryId => async dispatch => {
+    try {
+        const res = await axios.get(`http://localhost:5000/api/videos/has-watched/${categoryId}`);
+        return res.data;
+    } catch(err) {
+        dispatch({
+            type: VIDEO_ERROR,
+            payload: err
+        });
+    }
+}

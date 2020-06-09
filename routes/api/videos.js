@@ -69,6 +69,21 @@ router.get('/category/:category_id', auth, async (req, res) => {
 });
 
 // @action          GET
+// desc             GETS ALL VIDEOS BY CATEGORY
+// access           PRIVATE
+router.get('/has-watched/:category_id', auth, async (req, res) => {
+    try {
+        const videos = await Video.find({ category: req.params.category_id })
+            .select('watched');
+        const watchedVideos = videos.filter(vid => vid.watched === true);
+        res.json(watchedVideos.length);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error')
+    }
+});
+
+// @action          GET
 // desc             GETS ALL VIDEOS BY CURRENT USER
 // access           PRIVATE
 router.get('/', auth, async (req, res) => {

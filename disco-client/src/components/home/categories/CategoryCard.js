@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useSpring, animated } from 'react-spring';
 
 import { updateCategory, deleteCategory, selectCategory } from '../../../redux/actions/categories';
+import { hasWatched } from '../../../redux/actions/videos';
 
 
-const CategoryCard = ({ category, updateCategory, deleteCategory, selectCategory }) => {
+const CategoryCard = ({ category, updateCategory, deleteCategory, selectCategory, hasWatched }) => {
+    const count = useSpring({ number: category.videos.length, from: { number: 0 }});
+
+    
     const holder = category.title;
     const [ title, setTitle ] = useState(holder);
     const [ activeForm, setActiveForm ] = useState(false);
+    const [ watched, setWatched ] = useState(0);
+
+    
+    const fetchWatchCount = async () => {
+        const num = await hasWatched(category._id);
+        setWatched(num);
+    }
+    
 
     const handleFormFocus = e => {
         e.preventDefault();
@@ -38,7 +51,7 @@ const CategoryCard = ({ category, updateCategory, deleteCategory, selectCategory
         setActiveForm(!activeForm)
     }
 
-    
+    fetchWatchCount();
 
     return (   
         <Link to={`/${category._id}`} className="item-card"  onClick={() => selectCategory(category)}>
@@ -49,6 +62,9 @@ const CategoryCard = ({ category, updateCategory, deleteCategory, selectCategory
                             { activeForm ? 'Back' : 'Edit' }
                         </button>
                         <button onClick={handleCategoryDelete}>x</button>
+                    </div>
+                    <div className="watched-count">
+                        {watched} / <animated.span>{count.number}</animated.span>
                     </div>           
                 </div>
                 <div className="title">
@@ -67,4 +83,4 @@ const CategoryCard = ({ category, updateCategory, deleteCategory, selectCategory
     )
 }
 
-export default connect(null, { updateCategory, deleteCategory, selectCategory })(CategoryCard);
+export default connect(null, { updateCategory, deleteCategory, selectCategory, hasWatched })(CategoryCard);
