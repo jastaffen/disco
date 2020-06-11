@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Logo from '../../images/logo.png';
@@ -7,7 +8,9 @@ import Logo from '../../images/logo.png';
 const NavBar = ({ userState: { user, loading } }) => (
     <nav className="navbar">
         <div>
-            <img src={Logo} alt="disco logo" />
+            <Link to="/home">
+                <img src={Logo} alt="disco logo" />
+            </Link>
         </div>
                 
         { !loading && <h2>Hi {user.name}</h2> }

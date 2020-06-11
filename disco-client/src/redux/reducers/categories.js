@@ -1,4 +1,5 @@
-import { GET_CATEGORIES, SELECTED_CATEGORY, CATEGORY_LOADING, CATEGORY_ERROR } from '../actions/types';
+import { GET_CATEGORIES, SELECT_CATEGORY, CATEGORY_LOADING, CATEGORY_ERROR, 
+        ADD_CATEGORY, UPDATE_CATEGORY, DELETE_CATEGORY } from '../actions/types';
 
 const initialState = {
     categories: [],
@@ -16,11 +17,33 @@ export default function( state = initialState, action ) {
                 categories: payload,
                 loading: false
             }
-        case SELECTED_CATEGORY: 
+        case ADD_CATEGORY:
+            return {
+                ...state,
+                loading: false,
+                categories: [...state.categories, payload]
+            }
+        case UPDATE_CATEGORY:  
+            const updatedCategories = [...state.categories].map(category => {
+                return category._id === payload._id ? payload : category;
+            });
+            return {
+                ...state,
+                loading: false,
+                categories: updatedCategories
+            }
+        case SELECT_CATEGORY: 
             return {
                 ...state,
                 selectedCategory: payload,
                 loading: false
+            }
+        case DELETE_CATEGORY:
+            const categoriesWithoutDeleted = [...state.categories].filter(category => category._id !== payload._id);
+            return {
+                ...state,
+                loading: false,
+                categories: categoriesWithoutDeleted
             }
         case CATEGORY_LOADING:
             return {

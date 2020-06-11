@@ -12,10 +12,36 @@ const URL = (id) => {
 
 const fetchVideoData = async id => {
     const res = await axios.get(URL(id));
-    const { url, width, height } = res.data.items[0].snippet.thumbnails.maxres;
+    let url, width, height; 
+    if (res.data.items[0].snippet.thumbnails.maxres) {
+        const maxres = res.data.items[0].snippet.thumbnails.maxres;
+        url = maxres.url; width = maxres.width; height = maxres.height;
+    } else {
+        const highres = res.data.items[0].snippet.thumbnails.high;
+        url = highres.url; width = highres.width; height = highres.height;
+    }
     const { duration } = res.data.items[0].contentDetails;
-    const arr = duration.split('M');
-    const videoLength = (parseInt(arr[0].slice(2)) * 60) + parseInt(arr[1].slice(0,1));
+    let timeArr;
+    let minutesToSeconds = 0;
+    let seconds = 0;
+    let hoursToSeconds = 0;
+    if (duration.includes('H')) {
+        timeArr = duration.split('H');
+        hoursToSeconds = (parseInt(timeArr[0].slice(2)) * 60) * 60;
+        if (timeArr[1].includes('M')) {
+            minuteArr = timeArr[1].split('M');
+            
+            minutesToSeconds = parseInt(minuteArr[0]) * 60;
+            seconds = parseInt(minuteArr[1].slice(0, duration.length - 1));
+        }
+    } else if (duration.includes('M')) {
+        timeArr = duration.split('M');
+        minutesToSeconds = parseInt(timeArr[0].slice(2) * 60);
+        seconds = parseInt(timeArr[1].slice(0, duration.length - 1));
+    } else {
+        seconds = parseInt(duration.slice(2, duration.length - 1));
+    }
+    const videoLength = hoursToSeconds + minutesToSeconds + seconds; 
     return { url, width, height, videoLength };
 
 }
@@ -38,6 +64,7 @@ router.post('/:category_id', auth, async (req, res) => {
         video.user = req.user.id;
         video.category = category._id;
         const { url, width, height, videoLength } = await fetchVideoData(vidId);
+        if (!url) return res.json('no video found.');
         video.thumbnail = { url, width, height };
         video.videoLength = videoLength;
         await video.save();
@@ -50,6 +77,35 @@ router.post('/:category_id', auth, async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
+    }
+});
+
+// @action          GET
+// desc             GETS ALL VIDEOS BY CATEGORY
+// access           PRIVATE
+router.get('/category/:category_id', auth, async (req, res) => {
+    try {
+        const videos = await Video.find({ category: req.params.category_id })
+            .select('title thumbnail videoLength watched pausedAt videoUrl');
+        res.json(videos);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error')
+    }
+});
+
+// @action          GET
+// desc             GETS ALL VIDEOS BY CATEGORY
+// access           PRIVATE
+router.get('/has-watched/:category_id', auth, async (req, res) => {
+    try {
+        const videos = await Video.find({ category: req.params.category_id })
+            .select('watched');
+        const watchedVideos = videos.filter(vid => vid.watched === true);
+        res.json(watchedVideos.length);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error')
     }
 });
 
@@ -67,7 +123,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // @action          GET/SHOW
-// desc             GETS A VIDEO BY IDEA
+// desc             GETS A VIDEO BY ID
 // access           PRIVATE
 router.get('/:video_id', auth, async (req, res) => {
     try {
@@ -121,12 +177,43 @@ router.delete('/:video_id', auth, async (req, res) => {
         category.videos = categoryWithoutVideo;
         await category.save();
         await video.remove();
-        res.json('Video Deleted')
+        res.json(video)
     } catch (err) {
         console.error(err.message);
         if (err.path === '_id') return res.status(400).send('Video not found.');
         res.status(500).send('Server Error');
     }
 });
+
+// @action          PATCH/TOGGLE WATCHED
+// desc             TOGGLES VIDEOS WATCHED PROPERTY
+// access           PRIVATE
+router.patch('/watched/:video_id', auth, async (req, res) => {
+    try {
+        const video = await Video.findById(req.params.video_id);
+        video.set('watched', !video.watched);
+        await video.save();
+        res.json(video);
+    } catch (err) {
+        console.error(err.message);
+        if (err.path === "_id") return res.send('Video not found.');
+    }
+});
+
+// @action          PATCH/PAUSED AT
+// desc             UPDATE WHERE A VIDEO IS PAUSED AT
+// access           PRIVATE
+router.patch('/paused/:video_id', auth, async (req, res) => {
+    const { pausedAt } = req.body
+    try {
+        const video = await Video.findById(req.params.video_id);
+        video.set('pausedAt', parseInt(Math.floor(pausedAt)));
+        await video.save();
+        // res.json(video);
+    } catch (err) {
+        console.error(err.message);
+        if (err.path === "_id") return res.send('Video not found.');
+    }
+})
 
 module.exports = router;

@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import Login from './auth/Login';
 import SignUp from './auth/SignUp';
 
+import Logo from '../images/logo.png';
+
 const PublicLanding = ({ user: { loading, errors }}) => {
     const [ errs, setErrors ] = useState({});
     const [ signUp, setSignUp ] = useState(false);
@@ -31,23 +33,25 @@ const PublicLanding = ({ user: { loading, errors }}) => {
     }
 
     return (
-        <div>
-            <h1>WELCOME TO DISCO</h1>
-            <div>
-                {signUp ? <SignUp /> : <Login /> }
-            </div>
-            <div>
-                <ul>
-                    { !loading && errs && renderErrors() }
-                </ul>
-            </div>
-            <div>
-                <h4>{signUp ? "Already have an account?" : 
-                    "Don't have an account?" }
-                        <button onClick={handleLinkClick}>
-                            { signUp ? "Login!" : "Sign Up!" }
-                        </button>
-                </h4>
+        <div className="public-landing">
+            <h1>WELCOME TO <img src={Logo} alt="disco logo" /></h1>
+            <div className="auth-container">
+                <div>
+                    {signUp ? <SignUp /> : <Login /> }
+                </div>
+                <div>
+                    <ul>
+                        { !loading && errs && renderErrors() }
+                    </ul>
+                </div>
+                <div className="auth-switch">
+                    <h4>{signUp ? "Already have an account?" : 
+                        "Don't have an account?" }
+                            <button onClick={handleLinkClick}>
+                                { signUp ? "Login!" : "Sign Up!" }
+                            </button>
+                    </h4>
+                </div>
             </div>
         </div>
     )

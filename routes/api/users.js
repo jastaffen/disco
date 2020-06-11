@@ -120,16 +120,17 @@ router.patch('/:user_id', auth, async (req, res) => {
 // @action          POST
 // desc             ADD A CATEGORY
 // access           PRIVATE
-router.post('/category/:user_id', auth, async (req, res) => {
+router.post('/category', auth, async (req, res) => {
+    console.log(req.body);
     const { title } = req.body;
-    const user = await User.findById(req.params.user_id);
+    const user = await User.findById(req.user.id);
     const category = await new Category({ title });
     try {
-        for (let cat of user.categories) {
-            if (cat.title === category.title) {
-                res.status(400).json({ msg: 'Category by that name already exists' });
-            }
-        }
+        // for (let cat of user.categories) {
+        //     if (cat.title === category.title) {
+        //         return res.json({ msg: 'Category by that name already exists' });
+        //     }
+        // }
         category.user = user._id;
         await category.save();
         user.categories.push(category);

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useSpring, animated } from 'react-spring';
 
 import FormField from '../form/FormField';
 
 import { login } from '../../redux/actions/user';
 
 const Login = ({ login }) => {
+    const move = useSpring({marginRight: 0, from: { marginRight: -50000 }});
     const [ user, setUser ] = useState({
         email: '',
         password: ''
@@ -37,14 +39,16 @@ const Login = ({ login }) => {
     }
 
     return (
-        <div>
+        <animated.div style={move} class="auth-fields">
+            <h2>Login</h2>
             <FormField type="text" name="email" value={email} 
                 handleChange={handleChange} required />
             <FormField type={!show ? "password" : "text"} name="password" value={password}
                 handleChange={handleChange} required />
-            
+
             <button onClick={handleSubmit}>Login</button>
-        </div>
+           
+        </animated.div>
     )
 }
 
