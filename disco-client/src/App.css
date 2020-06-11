@@ -108,7 +108,17 @@ main {
 }
 
 .time-code {
+    position: relative;
     height: 150px;
+}
+
+.watched-count {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
 }
 
 .title {
@@ -200,6 +210,7 @@ main {
 }
 
 .progress {
+    position: relative;
     background: red;
     height: 8px;
     border-radius: inherit;
@@ -215,4 +226,20 @@ main {
 .watched button {
     border: 1px solid black;
 
+}
+
+.video-watched {
+    position: relative;
+    filter: grayscale(0.7);
+}
+
+.video-watched::after {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    content: "WATCHED";
+    font-size: 25px;
+    color: white;
+    font-weight: 800;
+    text-shadow: 2px 2px #ff0000;
 }

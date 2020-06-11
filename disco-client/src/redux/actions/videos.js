@@ -105,11 +105,11 @@ export const toggleWatched = videoId => async dispatch => {
 
 export const recordPause = (videoId, pausedAt) => async dispatch => {
     try {
-        const res = await axios.patch(`http://localhost:5000/api/videos/paused/${videoId}`, { pausedAt });
-        dispatch({
-            type: SELECT_VIDEO,
-            payload: res.data
-        });
+        await axios.patch(`http://localhost:5000/api/videos/paused/${videoId}`, { pausedAt });
+        // dispatch({
+        //     type: SELECT_VIDEO,
+        //     payload: res.data
+        // });
     } catch (err) {
         dispatch({
             type: VIDEO_ERROR,

@@ -183,7 +183,7 @@ router.patch('/paused/:video_id', auth, async (req, res) => {
         const video = await Video.findById(req.params.video_id);
         video.set('pausedAt', parseInt(Math.floor(pausedAt)));
         await video.save();
-        res.json(video);
+        // res.json(video);
     } catch (err) {
         console.error(err.message);
         if (err.path === "_id") return res.send('Video not found.');

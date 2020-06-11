@@ -11,7 +11,8 @@ const VideoStream = ({ videoState: { loading, selectedVideo }, toggleWatched, re
         height: '420',
         width: '560',
         playerVars: {
-            start: selectedVideo.pausedAt
+            start: selectedVideo.pausedAt,
+            color: 'white'
         }
       };
     
@@ -20,13 +21,14 @@ const VideoStream = ({ videoState: { loading, selectedVideo }, toggleWatched, re
     const [ progressWidth, setProgressWidth ] = useState(0);
     const [ watchedDisplay, setWatchedDisplay ] = useState(false);
 
+
     useEffect(() => {
         let videoArr;
         if (!loading) {
             videoArr = selectedVideo.videoUrl.split('v=');
             setId(videoArr[1]);
         }
-    }, [ selectedVideo, loading ]);
+    }, [ loading ]);
 
 
     useEffect(() => {
@@ -36,19 +38,23 @@ const VideoStream = ({ videoState: { loading, selectedVideo }, toggleWatched, re
     }, [ progressWidth, selectedVideo.watched ]);
 
     const handlePause = (e) => {
-        recordPause(selectedVideo._id, e.target.playerInfo.currentTime);
+        e.target.pauseVideo();
+        e.target.isVideoInfoVisible(true);
+        setProgressWidth((selectedVideo.pausedAt / selectedVideo.videoLength) * 100);
+        recordPause(selectedVideo._id, Math.floor(e.target.playerInfo.currentTime));
         clearInterval(vidProgress);
     }
 
     const handlePlay = e => {
         vidProgress = setInterval(() => {
-            setProgressWidth((e.target.playerInfo.currentTime / selectedVideo.videoLength) * 100)
+            setProgressWidth((Math.floor(e.target.playerInfo.currentTime) / selectedVideo.videoLength) * 100)
         }, 1000);
     }
     return(
         <div className="video-stream">
             { !loading && 
                 <YouTube videoId={id} opts={opts} onPause={handlePause} onPlay={handlePlay}
+                 onReady={(e) => e.target.playVideo()}
                  />
             }
             <div className="progress-bar">
