@@ -40,7 +40,6 @@ const VideoStream = ({ videoState: { loading, selectedVideo }, toggleWatched, re
     const handlePause = (e) => {
         e.target.pauseVideo();
         e.target.isVideoInfoVisible(true);
-        setProgressWidth((selectedVideo.pausedAt / selectedVideo.videoLength) * 100);
         recordPause(selectedVideo._id, Math.floor(e.target.playerInfo.currentTime));
         clearInterval(vidProgress);
     }

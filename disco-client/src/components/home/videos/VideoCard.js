@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { useSpring, animated } from 'react-spring';
 
 
 import { updateVideo, deleteVideo, selectVideo } from '../../../redux/actions/videos';
 
 const VideoCard = ({ video, updateVideo, deleteVideo, selectVideo }) => {
-    const move = useSpring({ marginRight: 0, from: { marginRight: -5000 }});
     const holder = video.title;
     const [ title, setTitle ] = useState(holder);
     const [ videoUrl, setVideoUrl ] = useState(video.videoUrl);
@@ -70,7 +68,7 @@ const VideoCard = ({ video, updateVideo, deleteVideo, selectVideo }) => {
                                     <button id="nav-input" onClick={handleNextClick}>URL {'>'}</button> 
                                 </div> 
                                 :
-                                <animated.div style={move}>
+                                <div>
                                     <div className="video-update-field">
                                         <input className="card-input" type="text" value={videoUrl} onClick={handleFormFocus}
                                             placeholder="video url..." onChange={(e) => setVideoUrl(e.target.value)} />
@@ -78,7 +76,7 @@ const VideoCard = ({ video, updateVideo, deleteVideo, selectVideo }) => {
                                     </div>
                                     <button id="nav-input" onClick={handleNextClick}>{'<'} Title</button>
 
-                                </animated.div>
+                                </div>
                             }
                         </form> 
                     : 

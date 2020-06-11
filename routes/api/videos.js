@@ -12,10 +12,36 @@ const URL = (id) => {
 
 const fetchVideoData = async id => {
     const res = await axios.get(URL(id));
-    const { url, width, height } = res.data.items[0].snippet.thumbnails.maxres;
+    let url, width, height; 
+    if (res.data.items[0].snippet.thumbnails.maxres) {
+        const maxres = res.data.items[0].snippet.thumbnails.maxres;
+        url = maxres.url; width = maxres.width; height = maxres.height;
+    } else {
+        const highres = res.data.items[0].snippet.thumbnails.high;
+        url = highres.url; width = highres.width; height = highres.height;
+    }
     const { duration } = res.data.items[0].contentDetails;
-    const arr = duration.split('M');
-    const videoLength = (parseInt(arr[0].slice(2)) * 60) + parseInt(arr[1].slice(0,1));
+    let timeArr;
+    let minutesToSeconds = 0;
+    let seconds = 0;
+    let hoursToSeconds = 0;
+    if (duration.includes('H')) {
+        timeArr = duration.split('H');
+        hoursToSeconds = (parseInt(timeArr[0].slice(2)) * 60) * 60;
+        if (timeArr[1].includes('M')) {
+            minuteArr = timeArr[1].split('M');
+            
+            minutesToSeconds = parseInt(minuteArr[0]) * 60;
+            seconds = parseInt(minuteArr[1].slice(0, duration.length - 1));
+        }
+    } else if (duration.includes('M')) {
+        timeArr = duration.split('M');
+        minutesToSeconds = parseInt(timeArr[0].slice(2) * 60);
+        seconds = parseInt(timeArr[1].slice(0, duration.length - 1));
+    } else {
+        seconds = parseInt(duration.slice(2, duration.length - 1));
+    }
+    const videoLength = hoursToSeconds + minutesToSeconds + seconds; 
     return { url, width, height, videoLength };
 
 }
