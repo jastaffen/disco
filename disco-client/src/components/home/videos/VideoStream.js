@@ -27,6 +27,7 @@ const VideoStream = ({ videoState: { loading, selectedVideo }, toggleWatched, re
         if (!loading) {
             videoArr = selectedVideo.videoUrl.split('v=');
             setId(videoArr[1]);
+            setProgressWidth((selectedVideo.pausedAt / selectedVideo.videoLength) * 100);
         }
     }, [ loading ]);
 
