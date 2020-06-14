@@ -21,6 +21,7 @@ export const CATEGORY_ERROR = "CATEGORY_ERROR";
 
 // VIDEOS
 export const GET_VIDEOS = "GET_VIDEOS";
+export const GET_ALL_VIDEOS = "GET_ALL_VIDEOS";
 export const SELECT_VIDEO = "SELECT_VIDEO";
 export const ADD_VIDEO = "ADD_VIDEO";
 export const EDIT_VIDEO = "EDIT_VIDEO";

@@ -56,6 +56,7 @@ const App = () => {
           <PrivateRoute exact path="/home" component={PrivateLanding} />
           <PrivateRoute exact path="/:category_id" component={VideoLanding} />
           <PrivateRoute exact path="/v/:video_id" component={VideoStreamLanding} />
+          <PrivateRoute exact path="/all-vids" component={VideoLanding} />
         </Switch>
       </Router>
       </div>

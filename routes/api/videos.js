@@ -114,7 +114,7 @@ router.get('/has-watched/:category_id', auth, async (req, res) => {
 // access           PRIVATE
 router.get('/', auth, async (req, res) => {
     try {
-        const videos = await Video.find({ user: req.user.id });
+        const videos = await Video.find({ user: req.user.id }).sort({ title: 'asc' });
         res.json(videos);
     } catch (err) {
         console.error(err.message);
