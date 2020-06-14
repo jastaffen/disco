@@ -6,13 +6,16 @@ import VideosContainer from './VideosContainer';
 
 
 const VideoLanding = () => {
-    const move = useSpring({ marginRight: 0, from: { marginRight: -5000 }});
+    const fade = useSpring({ opacity: 1, 
+        from: { opacity: 0 }, 
+        config: { duration: 1000 }
+    });
     
     return (
-        <animated.div style={move}>
+        <animated.main style={fade}>
             <NavBar />
             <VideosContainer />
-        </animated.div>
+        </animated.main>
     )
 }
 
