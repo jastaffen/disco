@@ -48,7 +48,8 @@ const VideoCard = ({ video, updateVideo, deleteVideo, selectVideo }) => {
     }
 
     return (
-        <Link to={`v/${video._id}`} className={video.watched ? "item-card video-watched" : "item-card"} onClick={() => selectVideo(video._id)}>
+        <Link to={`v/${video._id}`} className={video.watched ? "item-card video-watched" : "item-card"} 
+            onClick={() => selectVideo(video._id)}>
             <div>
                 <div className="time-code video-image" style={{backgroundImage: `url(${video.thumbnail.url})`}}>
                     <div className="top-right">

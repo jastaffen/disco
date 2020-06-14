@@ -1,6 +1,8 @@
+/* GENERAL */
 body {
     margin: 0px 12%;
 }
+
 
 h1 {
     text-align: center;
@@ -32,6 +34,69 @@ button {
     outline: none;
 }
 
+/* DRAWER */
+
+#drawer {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    cursor: pointer;
+}
+
+.drawer-container {
+    position: absolute;
+    left: 0px;
+    animation: moveright .25s;
+    height: 100%;
+    box-shadow: 1px 0px 3px black;
+    z-index: 200;
+    background: white;
+    padding-right: 50px;
+}
+
+.drawer-container p {
+    position: relative;
+    left: 40px;
+    top: 50px;
+    width: 100px;
+    padding: 0px 50px 0px 0px;
+    font-size: 12px;
+}
+
+.drawer-backdrop:not(.drawer-container) {
+    filter: blur(1px);
+    pointer-events: none;
+}
+
+.hide-drawer {
+    animation: dissappearleft .25s;
+}
+
+@keyframes moveright {
+    from {
+        width: 0px;
+    }
+    to {
+        width: 150px;
+    }
+}
+
+@keyframes disappearleft {
+    from {
+        width: 150px;
+    }
+    to {
+        width: 0px;
+    }
+}
+
+#close-drawer {
+    position: absolute;
+    right: 0px; top: 5px;
+}
+
+/* PUBLIC LANDING */
+
 .public-landing h1 img {
     width: 170px;
     object-fit: contain;
@@ -59,6 +124,9 @@ main {
     margin: 0px 12%;
 }
 
+
+/* NAVBAR */
+
 .navbar {
     display: flex;
     flex-direction: row;
@@ -71,6 +139,22 @@ main {
     width: 150px;
     object-fit: contain;
 }
+
+.auth-nav {
+    border: 1px solid black;
+    margin: 1px;
+    padding: 0px;
+    width: 100px;
+    border-radius: 10px;
+}
+
+.auth-nav h4 {
+    padding: 1px;
+    margin: 1px;
+}
+
+
+/* PRIVATE LANDING */
 
 .item-container {
     border: 1px solid black;

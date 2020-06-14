@@ -1,25 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Logo from '../../images/logo.png';
+import LogoNav from './LogoNav';
 
 
-const NavBar = ({ userState: { user, loading } }) => (
-    <nav className="navbar">
-        <div>
-            <Link to="/home">
-                <img src={Logo} alt="disco logo" />
+
+const NavBar = ({ userState: { user, loading } }) => {
+    const [ hovering, setHovering ] = useState('Hi');
+    return (
+        <nav className="navbar">
+            <LogoNav />
+            <Link to="all-vids">
+                All Videos
             </Link>
-        </div>
-                
-        { !loading && <h2>Hi {user.name}</h2> }
+            <Link to="feed">
+                Feed
+            </Link>
+            <button className="auth-nav" onMouseEnter={() => setHovering('Bye')} onMouseLeave={() => setHovering('Hi')}>
+                { !loading && <h4>{hovering} {user.name}</h4> }
 
-        <div>
-            <button>Logout</button>
-        </div>
-    </nav>
-)
+                <div>
+                    Logout
+                </div>
+            </button>
+        </nav>
+    )
+}
+
 
 const msp = state => ({
     userState: state.user
