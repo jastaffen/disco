@@ -9,7 +9,7 @@ import VideoCard from './VideoCard';
 
 import { getVideos, getAllVids } from '../../../redux/actions/videos';
 
-const VideosContainer = ({ getVideos, getAllVids, videoState: { loading, videos }}) => {
+const VideosContainer = ({ getVideos, getAllVids, videoState: { loading, videos } }) => {
     const fade = useSpring({ opacity: 1, from: { opacity: 0 }});
     const { category_id } = useParams();
     
@@ -28,15 +28,18 @@ const VideosContainer = ({ getVideos, getAllVids, videoState: { loading, videos 
             <VideoCardForm key={index} setNewVideo={setNewVideo} />
         ));
     }
+
     return (
         <animated.div style={fade} className="item-container">
             { !loading && videos.map(video => (
                 <VideoCard key={video._id} video={video} />
             ))}
             { newVideo.length > 0 && renderVideoCardForms() }
-            <div key={'add'} className="item-card" onClick={() => setNewVideo([...newVideo, 'new'])}>
-                <button>+</button>  
-            </div>
+            { category_id !== 'all-vids' &&
+                <div key={'add'} className="item-card" onClick={() => setNewVideo([...newVideo, 'new'])}>
+                    <button>+</button>  
+                </div>
+            }
         </animated.div>
     )
 }

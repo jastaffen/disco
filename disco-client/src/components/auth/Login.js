@@ -34,6 +34,7 @@ const Login = ({ login }) => {
         if (!email || !password) return alert('empty fields.');
         await login(user);
         if (localStorage.getItem('token')) {
+            window.location.reload()
             return history.push('/home');
         }
     }

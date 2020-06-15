@@ -20,10 +20,10 @@ const PublicLanding = ({ user: { loading, errors }}) => {
 
     const renderErrors = () => {
 
-        if (typeof errs === 'string') return <li>{errs}</li>
+        if (typeof errs === 'string') return <li className="err-item">{errs}</li>
 
         return Object.keys(errs).map(err => (
-            <li key={err}>{errs[err].properties.message}</li>
+            <li className="err-item" key={err}>{errs[err].properties.message}</li>
         ))
     }
 
