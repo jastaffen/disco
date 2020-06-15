@@ -129,3 +129,21 @@ export const hasWatched = categoryId => async dispatch => {
         });
     }
 }
+
+export const getAllVids = () => async dispatch => {
+    try {
+        dispatch({
+            type: VIDEO_LOADING
+        });
+        const res = await axios.get('http://localhost:5000/api/videos');
+        dispatch({
+            type: GET_VIDEOS,
+            payload: res.data
+        });
+    } catch(err) {
+        dispatch({
+            type: VIDEO_ERROR,
+            payload: err
+        });
+    }
+}

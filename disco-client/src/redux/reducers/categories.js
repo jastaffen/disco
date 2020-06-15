@@ -1,5 +1,6 @@
-import { GET_CATEGORIES, SELECT_CATEGORY, CATEGORY_LOADING, CATEGORY_ERROR, 
-        ADD_CATEGORY, UPDATE_CATEGORY, DELETE_CATEGORY } from '../actions/types';
+import { GET_CATEGORIES, SELECT_CATEGORY, CATEGORY_LOADING, 
+    CATEGORY_ERROR, ADD_CATEGORY, UPDATE_CATEGORY, 
+                    DELETE_CATEGORY } from '../actions/types';
 
 const initialState = {
     categories: [],

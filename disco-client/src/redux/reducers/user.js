@@ -1,4 +1,5 @@
-import { LOGOUT, GET_USER, EDIT_USER, DELETE_USER, USER_ERROR, USER_LOADING } from '../actions/types';
+import { LOGOUT, GET_USER, EDIT_USER, DELETE_USER, 
+    USER_ERROR, USER_LOADING } from '../actions/types';
 
 const initialState = {
     user: {},

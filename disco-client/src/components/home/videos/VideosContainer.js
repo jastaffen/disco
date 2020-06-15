@@ -7,16 +7,21 @@ import VideoCardForm from './VideoCardForm';
 import VideoCard from './VideoCard';
 
 
-import { getVideos } from '../../../redux/actions/videos';
+import { getVideos, getAllVids } from '../../../redux/actions/videos';
 
-const VideosContainer = ({ getVideos, videoState: { loading, videos }}) => {
+const VideosContainer = ({ getVideos, getAllVids, videoState: { loading, videos }}) => {
     const fade = useSpring({ opacity: 1, from: { opacity: 0 }});
     const { category_id } = useParams();
+    
     let [ newVideo, setNewVideo ] = useState([]);
 
     useEffect(() => {
+        if (category_id === 'all-vids') {
+            getAllVids();
+            return;
+        } 
         getVideos(category_id);
-    }, [])
+    }, [ category_id ])
 
     const renderVideoCardForms = () => {
         return newVideo.map((vid, index) => (
@@ -40,4 +45,4 @@ const msp = state => ({
     videoState: state.videos
 });
 
-export default connect(msp, { getVideos })(VideosContainer);
+export default connect(msp, { getVideos, getAllVids })(VideosContainer);
