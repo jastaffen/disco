@@ -28,7 +28,8 @@ const CategoriesContainer = ({ getCategories, categoryState: { loading, categori
                 <CategoryCard key={category._id} category={category} />
             ))}
             { newCategory.length > 0 && renderCategoryCardForms() }
-            <div key={'add'} className="item-card" onClick={() => setNewCategory([...newCategory, 'new'])}>
+            <div key={'add'} className="item-card" 
+                onClick={() => setNewCategory([...newCategory, 'new'])}>
                 <button>+</button>  
             </div>
         </div>
