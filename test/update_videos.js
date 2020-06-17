@@ -11,13 +11,13 @@ describe('updates video', () => {
         await video.save();
     });
 
-    it.only('Updates a video', async () => {
+    it('Updates a video', async () => {
         video.set('title', 'Good Salmon Recipe');
         await video.save();
         assert( video.title === 'Good Salmon Recipe' );
     });
 
-    it.only('Ensures an update is valid', async () => {
+    it('Ensures an update is valid', async () => {
         video.set('title', undefined);
         try {
             await video.save();

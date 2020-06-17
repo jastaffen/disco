@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import NavBar from '../NavBar';
 import VideoStream from './VideoStream';

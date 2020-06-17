@@ -29,7 +29,7 @@ const VideoStream = ({ videoState: { loading, selectedVideo }, toggleWatched, re
             setId(videoArr[1]);
             setProgressWidth((selectedVideo.pausedAt / selectedVideo.videoLength) * 100);
         }
-    }, [ loading ]);
+    }, [ loading, selectedVideo ]);
 
 
     useEffect(() => {

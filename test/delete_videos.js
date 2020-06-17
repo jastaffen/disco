@@ -13,7 +13,7 @@ describe('Delete Videos', async () => {
         await category.save();
     });
 
-    it.only('deletes a video and deletes it from its dependencies', async () => {
+    it('deletes a video and deletes it from its dependencies', async () => {
         const videosWithoutVid = category.videos
             .filter(vid => vid._id.toString() !== video._id.toString() );
         category.videos = videosWithoutVid;

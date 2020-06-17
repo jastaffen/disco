@@ -10,7 +10,7 @@ const Video = require('../../models/Video');
 // access           PRIVATE
 router.get('/', auth, async (req,res) => {
     try {
-        const categoriesByUser = await Category.find({ user: req.user.id }).select('title videos');
+        const categoriesByUser = await Category.find({ user: req.user.id, isSubCategory: false }).select('title videos children');
         res.json(categoriesByUser);
     } catch (err) {
         console.error(err.message);
@@ -65,6 +65,51 @@ router.delete('/:category_id', auth, async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
+    }
+});
+
+// @action          POST
+// desc             CREATES A SUBCATEGORY
+// access           PRIVATE
+router.post('/:category_id', auth, async (req, res) => {
+    const { title } = req.body;
+    const category_id = req.params.category_id;
+    try {
+        const subCategory = new Category({ title, isSubCategory: true, parent: category_id });
+        const category = await Category.findById(category_id);
+        await subCategory.save();
+        category.children.push(subCategory);
+        await category.save();
+        res.json(subCategory);
+    } catch (err) {
+        console.error(err.message);
+        if (err.path === '_id') {
+            return res.status(400).json({ msg: 'Category Not Found' });
+        }
+        const validationRes = category.validateSync();
+        if (validationRes) return res.status(400).json(validationRes);
+        res.status(500).send('Server Error');
+    }
+});
+
+// @action          GET
+// desc             RETRIEVES A CATEGORY'S SUBCATEGORIES
+// access           PRIVATE
+router.get('/:category-id', auth, async (req,res) => {
+    const category_id = req.params.category_id;
+    try {
+        const category = await Category.findById(category_id).populate({
+            path: 'children',
+            model: 'Category'
+           });
+
+        res.json(category.children);
+    } catch (err) {
+        console.err(err.message);
+        if (err.path === '_id') {
+            return res.status(400).json({ msg: 'Category Not Found' });
+        }
+        res.status(500).send('Server Error')
     }
 });
 

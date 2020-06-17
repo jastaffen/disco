@@ -11,7 +11,14 @@ const CategorySchema = new Schema({
         type: Boolean,
         default: false
     },
-    children: [this],
+    children: [{
+        type: Schema.Types.ObjectId,
+        ref: 'category'
+    }],
+    parent: {
+        type: Schema.Types.ObjectId,
+        default: null
+    },
     videos: [{
         type: Schema.Types.ObjectId,
         ref: 'video'

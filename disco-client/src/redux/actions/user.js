@@ -1,4 +1,4 @@
-import { LOGIN, SIGN_UP, GET_USER, USER_ERROR } from './types';
+import { GET_USER, USER_ERROR } from './types';
 import axios from 'axios';
 
 import setAuthToken from '../../utils/setAuthToken';

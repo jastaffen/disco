@@ -21,7 +21,7 @@ const VideosContainer = ({ getVideos, getAllVids, videoState: { loading, videos 
             return;
         } 
         getVideos(category_id);
-    }, [ category_id ])
+    }, [ category_id, getAllVids, getVideos ])
 
     const renderVideoCardForms = () => {
         return newVideo.map((vid, index) => (
