@@ -186,10 +186,6 @@ main {
     align-content: center;
 }
 
-.item-card:last-child button {
-    font-size: 28px;
-}
-
 .time-code {
     position: relative;
     height: 150px;
@@ -324,4 +320,14 @@ main {
     color: white;
     font-weight: 800;
     text-shadow: 2px 2px #ff0000;
+}
+
+/* err and fallbacks */
+
+.err-item {
+    position: relative;
+    left: -15px;
+    color: red;
+    list-style-type: none;
+    text-align: center;
 }

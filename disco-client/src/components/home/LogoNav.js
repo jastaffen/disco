@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { Link } from 'react-router-dom';
 
 import Logo from '../../images/logo.png';
 
 const LogoNav = () => {
-    const pathname = useHistory().location.pathname;
     const [ hovering, setHovering ] = useState(false);
     const { x } = useSpring({ from: { x: 0 }, x: hovering ? 1 : 0, config: { duration: 1000 } });
 

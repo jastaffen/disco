@@ -39,7 +39,7 @@ describe('Creates User', () => {
         const user = new User(body);
         const validationRes = user.validateSync();
         const { message } = validationRes.errors.password;
-        assert(message === 'Password must be between 6 and 16 characters long.');
+        assert(message === 'Password must be at least 6 characters long.');
     });
 
     it('disallows invalid records from getting saved and that email is invalid', async () => {

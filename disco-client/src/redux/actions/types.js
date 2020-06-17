@@ -1,7 +1,5 @@
 
 // USER
-export const SIGN_UP = "SIGN_UP";
-export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const USER_LOADING = "USER_LOADING"
 export const GET_USER = "GET_USER";
@@ -17,6 +15,8 @@ export const UPDATE_CATEGORY = "UPDATE_CATEGORY";
 export const DELETE_CATEGORY = "DELETE_CATEGORY";
 export const CATEGORY_LOADING = "CATEGORY_LOADING";
 export const CATEGORY_ERROR = "CATEGORY_ERROR";
+export const GET_SUBCATEGORIES = "GET_SUBCATEGORIES";
+export const ADD_SUBCATEGORY = "ADD_SUBCATEGORY";
 
 
 

@@ -10,10 +10,10 @@ const CategoriesContainer = ({ getCategories, categoryState: { loading, categori
     let [ newCategory, setNewCategory ] = useState([]);
     
     useEffect(() => {
-        if (categories.length == 0) {
+        if (categories.length === 0) {
             getCategories();
         }
-    }, [ getCategories ]);
+    }, [ getCategories, categories.length ]);
 
 
     const renderCategoryCardForms = () => {
