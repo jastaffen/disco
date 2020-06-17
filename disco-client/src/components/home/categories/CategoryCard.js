@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useSpring, animated } from 'react-spring';
 
-import { updateCategory, deleteCategory, selectCategory } from '../../../redux/actions/categories';
+import { updateCategory, deleteCategory, selectCategory, getSubCategories } from '../../../redux/actions/categories';
+
 import { hasWatched } from '../../../redux/actions/videos';
 
 
-const CategoryCard = ({ category, updateCategory, deleteCategory, selectCategory, hasWatched }) => {
+const CategoryCard = ({ category, updateCategory, deleteCategory, selectCategory, 
+    hasWatched, getSubCategories }) => {
     const count = useSpring({ number: category.videos.length, from: { number: 0 }});
 
     
@@ -51,10 +53,15 @@ const CategoryCard = ({ category, updateCategory, deleteCategory, selectCategory
         setActiveForm(!activeForm)
     }
 
+    const handleCategorySelection = () => {
+        getSubCategories(category._id)
+        selectCategory(category);
+    }
+
     fetchWatchCount();
 
     return (   
-        <Link to={`/${category._id}`} className="item-card"  onClick={() => selectCategory(category)}>
+        <Link to={`/${category._id}`} className="item-card"  onClick={handleCategorySelection}>
             <div>
                 <div className="time-code">
                     <div className="top-right">
@@ -83,4 +90,5 @@ const CategoryCard = ({ category, updateCategory, deleteCategory, selectCategory
     )
 }
 
-export default connect(null, { updateCategory, deleteCategory, selectCategory, hasWatched })(CategoryCard);
+export default connect(null, { updateCategory, deleteCategory, 
+    selectCategory, hasWatched, getSubCategories })(CategoryCard);

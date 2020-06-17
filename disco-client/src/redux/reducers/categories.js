@@ -1,12 +1,14 @@
-import { GET_CATEGORIES, SELECT_CATEGORY, CATEGORY_LOADING, 
+import { 
+    GET_CATEGORIES, SELECT_CATEGORY, CATEGORY_LOADING, 
     CATEGORY_ERROR, ADD_CATEGORY, UPDATE_CATEGORY, 
-                    DELETE_CATEGORY } from '../actions/types';
+    DELETE_CATEGORY, GET_SUBCATEGORIES } from '../actions/types';
 
 const initialState = {
     categories: [],
     errors: [],
     loading: true,
-    selectedCategory: {}
+    selectedCategory: {},
+    subCategories: []
 }
 
 export default function( state = initialState, action ) {
@@ -45,6 +47,12 @@ export default function( state = initialState, action ) {
                 ...state,
                 loading: false,
                 categories: categoriesWithoutDeleted
+            }
+        case GET_SUBCATEGORIES:
+            return {
+                ...state,
+                loading: false,
+                subCategories: payload
             }
         case CATEGORY_LOADING:
             return {

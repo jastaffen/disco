@@ -1,6 +1,6 @@
 import { GET_CATEGORIES, CATEGORY_LOADING, 
     CATEGORY_ERROR, ADD_CATEGORY, UPDATE_CATEGORY, 
-    DELETE_CATEGORY, SELECT_CATEGORY } from '../actions/types';
+    DELETE_CATEGORY, SELECT_CATEGORY, GET_SUBCATEGORIES } from '../actions/types';
 
 import axios from 'axios';
 
@@ -78,4 +78,23 @@ export const selectCategory = category => dispatch => {
         type: SELECT_CATEGORY,
         payload: category
     });
+}
+
+export const getSubCategories = categoryId => async dispatch => {
+    debugger;
+    try {
+        dispatch({ type: CATEGORY_LOADING });
+        const res = await axios
+            .get(`http://localhost:5000/api/categories/sub-categories/${categoryId}`);
+        
+        dispatch({
+            type: GET_SUBCATEGORIES,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: CATEGORY_ERROR,
+            payload: err
+        });
+    }
 }

@@ -5,14 +5,14 @@ import { useSpring, animated } from 'react-spring';
 
 import VideoCardForm from './VideoCardForm';
 import VideoCard from './VideoCard';
+import CategoryCard from '../categories/CategoryCard';
 
 
 import { getVideos, getAllVids } from '../../../redux/actions/videos';
 
-const VideosContainer = ({ getVideos, getAllVids, videoState: { loading, videos } }) => {
+const VideosContainer = ({ getVideos, getAllVids, videoState: { loading, videos }, categoryState }) => {
     const fade = useSpring({ opacity: 1, from: { opacity: 0 }});
     const { category_id } = useParams();
-    
     let [ newVideo, setNewVideo ] = useState([]);
 
     useEffect(() => {
@@ -21,7 +21,7 @@ const VideosContainer = ({ getVideos, getAllVids, videoState: { loading, videos 
             return;
         } 
         getVideos(category_id);
-    }, [ category_id, getAllVids, getVideos ])
+    }, [ category_id, getAllVids, getVideos, categoryState ])
 
     const renderVideoCardForms = () => {
         return newVideo.map((vid, index) => (
@@ -31,6 +31,9 @@ const VideosContainer = ({ getVideos, getAllVids, videoState: { loading, videos 
 
     return (
         <animated.div style={fade} className="item-container">
+            { !categoryState.loading && categoryState.subCategories.map(subCat => (
+                <CategoryCard key={subCat._id} category={subCat} />
+            ))}
             { !loading && videos.map(video => (
                 <VideoCard key={video._id} video={video} />
             ))}
@@ -45,7 +48,8 @@ const VideosContainer = ({ getVideos, getAllVids, videoState: { loading, videos 
 }
 
 const msp = state => ({
-    videoState: state.videos
+    videoState: state.videos,
+    categoryState: state.categories
 });
 
 export default connect(msp, { getVideos, getAllVids })(VideosContainer);
