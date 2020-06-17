@@ -71,12 +71,13 @@ router.delete('/:category_id', auth, async (req, res) => {
 // @action          POST
 // desc             CREATES A SUBCATEGORY
 // access           PRIVATE
-router.post('/:category_id', auth, async (req, res) => {
+router.post('/sub-categories/:category_id', auth, async (req, res) => {
     const { title } = req.body;
     const category_id = req.params.category_id;
     try {
         const subCategory = new Category({ title, isSubCategory: true, parent: category_id });
         const category = await Category.findById(category_id);
+        subCategory.user = req.user.id;
         await subCategory.save();
         category.children.push(subCategory);
         await category.save();
@@ -95,17 +96,17 @@ router.post('/:category_id', auth, async (req, res) => {
 // @action          GET
 // desc             RETRIEVES A CATEGORY'S SUBCATEGORIES
 // access           PRIVATE
-router.get('/:category-id', auth, async (req,res) => {
+router.get('/sub-categories/:category_id', auth, async (req,res) => {
     const category_id = req.params.category_id;
     try {
         const category = await Category.findById(category_id).populate({
             path: 'children',
-            model: 'Category'
+            model: 'category'
            });
 
         res.json(category.children);
     } catch (err) {
-        console.err(err.message);
+        console.error(err.message);
         if (err.path === '_id') {
             return res.status(400).json({ msg: 'Category Not Found' });
         }
